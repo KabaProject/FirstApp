@@ -3,33 +3,35 @@ package com.kabaproject.firstapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
 
-    private Button button;
-    private TextView text;
-    private EditText inText;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.text = findViewById(R.id.txtMessage);
-        this.button = findViewById(R.id.btnToggle);
-        this.inText = findViewById(R.id.inText);
-
         buttonHandler();
     }
 
     protected void buttonHandler() {
-        this.button.setOnClickListener(view -> {
-            this.text.setText(this.inText.getText().toString());
+        Button button = findViewById(R.id.btnSubmit);
+
+        Map<TextView, EditText> inOut = new HashMap<>();
+        inOut.put(findViewById(R.id.txtName), findViewById(R.id.inName));
+        inOut.put(findViewById(R.id.txtSurname), findViewById(R.id.inSurname));
+        inOut.put(findViewById(R.id.txtEmail), findViewById(R.id.inEmail));
+
+        button.setOnClickListener(view -> {
+            for (Map.Entry<TextView, EditText> item : inOut.entrySet()){
+                item.getKey().setText(item.getValue().getText().toString());
+            }
         });
     }
 }
